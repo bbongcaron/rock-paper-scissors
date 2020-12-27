@@ -1,18 +1,16 @@
-const userScore = 0;
-const computerScore = 0;
+let userScore = 0;
+let computerScore = 0;
 // DOM variables
 /*
     getElementById() - Get a pointer to an HTML element (p, div, table, etc.)
     @param String containing name of id
     @returns Element object representing an HTML element
-*/
-/*
+
     querySelector() - Get the first element in the document with class="class_name"
     @param String containing name of class/tag to be searched for
     @returns NodeList object (array-like list in terms of indexing) containing
              all instances of the @param class.tag
-*/
-/*
+    
     Caching the DOM (Element/NodeList) - storing the above ID/Classes so we can reference 
     them later If we didn't store these pointers to the ID's/Classes, we would have to run
     getElementByID/querySelector every single time we need to fetch/change the 
@@ -21,9 +19,11 @@ const computerScore = 0;
 // const b/c the following can be treated like pointers to specific tags:
 // those pointers do not change
 const userScore_span = document.getElementById("user-score");
-const computerScore_span = document.getElementById("computer-score");
+const computerScore_span = document.getElementById("comp-score");
 const scoreBoard_div = document.querySelector(".score-board")
-const result_div = document.querySelector(".result")
+// we actually want to reference the text stored in the <p> tag
+// which is stored in the .result class tag
+const result_p = document.querySelector(".result > p")
 const rock_div = document.getElementById("rock")
 const paper_div = document.getElementById("paper")
 const scissors_div = document.getElementById("scissors")
@@ -37,16 +37,37 @@ function getComputerChoice() {
     return choices[randomNumber]
 }
 
-function win() {
+function capitalize_first_char(word) {
+    return word.charAt(0).toUpperCase() + word.substring(1, word.length);
+}
+
+function win(userChoice, computerChoice) {
     userScore++;
+    // Change the HTML embedded in between the span id'd userScore to variable userScore
+    // tagPointer.innerHTML refers to the HTML in between an opening and closing tag <>HTML</>
+    userScore_span.innerHTML = userScore;
+    // sub() => subscript; sup() => superscript
+    const smallUserWord = "user".fontsize(3).sub();
+    const smallCompWord = "comp".fontsize(3).sub();
+    // `${variableString} normal text` is ES6 syntax
+    result_p.innerHTML = `${capitalize_first_char(userChoice)}${smallUserWord} 
+                    beats ${capitalize_first_char(computerChoice)}${smallCompWord}. You win!`;
 }
 
-function lose() {
-    
+function lose(userChoice, computerChoice) {
+    computerScore++;
+    computerScore_span.innerHTML = computerScore;
+    const smallUserWord = "user".fontsize(3).sub();
+    const smallCompWord = "comp".fontsize(3).sub();
+    result_p.innerHTML = `${capitalize_first_char(userChoice)}${smallUserWord} 
+                loses to ${capitalize_first_char(computerChoice)}${smallCompWord}. You lose...`;
 }
 
-function draw() {
-    
+function draw(userChoice, computerChoice) {
+    const smallUserWord = "user".fontsize(3).sub();
+    const smallCompWord = "comp".fontsize(3).sub();
+    result_p.innerHTML = `${capitalize_first_char(userChoice)}${smallUserWord} 
+                ties with ${capitalize_first_char(computerChoice)}${smallCompWord}. It's a draw.`;
 }
 
 function game(userChoice) {
@@ -57,17 +78,17 @@ function game(userChoice) {
         case "rock|scissors":
         case "paper|rock":
         case "scissors|paper":
-            win();
+            win(userChoice, computerChoice);
             break;
         case "rock|paper":
         case "paper|scissors":
         case "scissors|rock":
-            lose();
+            lose(userChoice, computerChoice);
             break;
         case "rock|rock":
         case "paper|paper":
         case "scissors|scissors":
-            draw();
+            draw(userChoice, computerChoice);
             break;
     }
 }
