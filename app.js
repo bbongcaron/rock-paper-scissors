@@ -42,13 +42,13 @@ function capitalize_first_char(word) {
 }
 
 function win(userChoice, computerChoice) {
+    const smallUserWord = "user".fontsize(3).sub();
+    const smallCompWord = "comp".fontsize(3).sub();
+    const userChoice_div = document.getElementById(userChoice);
     userScore++;
     // Change the HTML embedded in between the span id'd userScore to variable userScore
     // tagPointer.innerHTML refers to the HTML in between an opening and closing tag <>HTML</>
     userScore_span.innerHTML = userScore;
-    // sub() => subscript; sup() => superscript
-    const smallUserWord = "user".fontsize(3).sub();
-    const smallCompWord = "comp".fontsize(3).sub();
     // `${variableString} normal text` is ES6 syntax
     result_p.innerHTML = `${capitalize_first_char(userChoice)}${smallUserWord} 
                     beats ${capitalize_first_char(computerChoice)}${smallCompWord}. You win!`;
@@ -60,27 +60,33 @@ function win(userChoice, computerChoice) {
         .toggle(class, true|false) toggles a class of an element on or off
     */
     // want to add a green-glow class to the div the user clicks on
-    document.getElementById(userChoice).classList.add('green-glow');
-    /*
-        setTimeout(function, time in ms) runs a function after some time in ms
-    */
-    setTimeout(function() {document.getElementById(userChoice).classList.remove('green-glow')}, 500)
+    userChoice_div.classList.add('green-glow');
+    // setTimeout(function, time in ms) runs a function after some time in ms
+    // () => 1-liner code to execute is ES6 syntax
+    // function () {code to execute} is ES5 syntax
+    setTimeout(() => userChoice_div.classList.remove('green-glow'), 300)
 }
 
 function lose(userChoice, computerChoice) {
-    computerScore++;
-    computerScore_span.innerHTML = computerScore;
     const smallUserWord = "user".fontsize(3).sub();
     const smallCompWord = "comp".fontsize(3).sub();
+    const userChoice_div = document.getElementById(userChoice);
+    computerScore++;
+    computerScore_span.innerHTML = computerScore;
     result_p.innerHTML = `${capitalize_first_char(userChoice)}${smallUserWord} 
                 loses to ${capitalize_first_char(computerChoice)}${smallCompWord}. You lose...`;
+    userChoice_div.classList.add('red-glow');
+    setTimeout(() => userChoice_div.classList.remove('red-glow'), 300)
 }
 
 function draw(userChoice, computerChoice) {
     const smallUserWord = "user".fontsize(3).sub();
     const smallCompWord = "comp".fontsize(3).sub();
+    const userChoice_div = document.getElementById(userChoice);
     result_p.innerHTML = `${capitalize_first_char(userChoice)}${smallUserWord} 
                 ties with ${capitalize_first_char(computerChoice)}${smallCompWord}. It's a draw.`;
+    userChoice_div.classList.add('gray-glow');
+    setTimeout(() => userChoice_div.classList.remove('gray-glow'), 300)
 }
 
 function game(userChoice) {
@@ -113,17 +119,10 @@ function game(userChoice) {
            done below
 */
 function main() {
-    rock_div.addEventListener('click', function() {
-        game("rock")
-    })
+    rock_div.addEventListener('click', () => game("rock"))
     
-    paper_div.addEventListener('click', function() {
-        game("paper")
-    })
+    paper_div.addEventListener('click', () => game("paper"))
     
-    scissors_div.addEventListener('click', function() {
-        game("scissors")
-    })
+    scissors_div.addEventListener('click', () => game("scissors"))
 }
-
 main();
