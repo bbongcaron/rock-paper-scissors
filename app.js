@@ -52,6 +52,19 @@ function win(userChoice, computerChoice) {
     // `${variableString} normal text` is ES6 syntax
     result_p.innerHTML = `${capitalize_first_char(userChoice)}${smallUserWord} 
                     beats ${capitalize_first_char(computerChoice)}${smallCompWord}. You win!`;
+    /*
+        .classList returns a DOMTokenList (like a Java ArrayList) of all the class names of
+                   an element => element.classList
+        .add(class1, class2...), .contains(class), .remove(class1, class2...) are self explanatory
+        .item(index) returns the class at index
+        .toggle(class, true|false) toggles a class of an element on or off
+    */
+    // want to add a green-glow class to the div the user clicks on
+    document.getElementById(userChoice).classList.add('green-glow');
+    /*
+        setTimeout(function, time in ms) runs a function after some time in ms
+    */
+    setTimeout(function() {document.getElementById(userChoice).classList.remove('green-glow')}, 500)
 }
 
 function lose(userChoice, computerChoice) {
