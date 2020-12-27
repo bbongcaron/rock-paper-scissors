@@ -92,12 +92,11 @@ function game(userChoice) {
             break;
     }
 }
-
 /*
     addEventListener - sets up a function that will be called whenever the specified event
                        is delivered to the target (target.addEventListener())
     @param Case-sensitive string representing the *event type* to listen for
-    @param Name of function to be called OR just build the function in the parameters, as
+    @param Name (and ONLY name) of function to be called OR just build the function in the parameters, as
            done below
 */
 function main() {
